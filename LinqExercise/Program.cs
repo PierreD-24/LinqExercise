@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Linq;
 
 namespace LinqExercise
@@ -21,31 +22,86 @@ namespace LinqExercise
              */
 
             //TODO: Print the Sum of numbers
+            Console.WriteLine(numbers.Sum());
+            Console.WriteLine("//////////////////");
 
             //TODO: Print the Average of numbers
+            Console.WriteLine(numbers.Average());
+            Console.WriteLine("//////////////////");
 
             //TODO: Order numbers in ascending order and print to the console
+            numbers.OrderBy(n => n).ToList().ForEach(n => Console.WriteLine(n));
+
+            Console.WriteLine("//////////////////");
 
             //TODO: Order numbers in descending order and print to the console
 
+            numbers.OrderByDescending(n => n).ToList().ForEach(n => Console.WriteLine(n));
+
+            Console.WriteLine("//////////////////");
+
             //TODO: Print to the console only the numbers greater than 6
+            var greaterThan = numbers.Where(n => n > 6).OrderBy(n => n);
+
+            foreach (var num in greaterThan)
+            {
+                Console.WriteLine(num);
+            }
+
+            Console.WriteLine("//////////////////");
 
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
+            var onlyFour = numbers.OrderByDescending(n => n).Take(4).ToArray();
+
+            foreach (var num in onlyFour)
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine("//////////////////");
 
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
+            var myAge = numbers.OrderByDescending(n => n).ToArray();
+            myAge.SetValue(28,4);
+
+            foreach (var num in myAge)
+            {
+                Console.WriteLine(num);
+            }
+            Console.WriteLine("//////////////////");
+
+            
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
+            employees.Where(x => x.FirstName.StartsWith('C') || x.FirstName.StartsWith('S')).OrderBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine(x.FullName));
+            Console.WriteLine("//////////////////");
 
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
+            employees.Where(x => x.Age > 26).OrderBy(x => x.Age).ThenBy(x => x.FirstName).ToList().ForEach(x => Console.WriteLine(x.FullName + x.Age));
+            Console.WriteLine("//////////////////");
 
             //TODO: Print the Sum of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+            var employeeSum = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Sum(x => x.YearsOfExperience);
+            Console.WriteLine(employeeSum);
+            Console.WriteLine("//////////////////");
 
             //TODO: Now print the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
+            var employeeAverage = employees.Where(x => x.YearsOfExperience <= 10 && x.Age > 35).Average(x => x.YearsOfExperience);
+            Console.WriteLine(employeeAverage);
+            Console.WriteLine("//////////////////");
 
             //TODO: Add an employee to the end of the list without using employees.Add()
+            Employee newEmployee = new Employee() {
+                FirstName = "Pierre",
+                LastName = "Dahrouj",
+                YearsOfExperience = 0,
+                Age = 28
+            };
+
+            employees.Append(newEmployee).ToList().ForEach(x => Console.WriteLine(x));
+            Console.WriteLine("//////////////////");
 
 
             Console.WriteLine();
