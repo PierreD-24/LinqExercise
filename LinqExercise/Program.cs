@@ -100,7 +100,7 @@ namespace LinqExercise
                 Age = 28
             };
 
-            employees.Append(newEmployee).ToList().ForEach(x => Console.WriteLine(x));
+            employees.Append(newEmployee).ToList().ForEach(x => Console.WriteLine(x.FullName));
             Console.WriteLine("//////////////////");
 
 
